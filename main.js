@@ -2,35 +2,37 @@
 
 "use strict";
 
-let keyCodes = {
+const keyCodes = {
     A: 65,
     E: 69,
     N: 78,
     P: 80
 };
 
-let minScrollLength = 36;
+const minScrollLength = 36;
 
 document.addEventListener('keydown', function(e) {
 
-    var scrollDestination;
+    let scrollDestination;
 
     if (e.ctrlKey) {
-        if (e.keyCode == keyCodes.A) {
-            scrollDestination = window.pageYOffset - window.innerHeight;
-            window.scroll(0, scrollDestination);
-        }
-        if (e.keyCode == keyCodes.E) {
-            scrollDestination = window.pageYOffset + window.innerHeight;
-            window.scroll(0, scrollDestination);
-        }
-        if (e.keyCode == keyCodes.N) {
-            scrollDestination = window.pageYOffset + minScrollLength;
-            window.scroll(0, scrollDestination);
-        }
-        if (e.keyCode == keyCodes.P) {
-            scrollDestination = window.pageYOffset - minScrollLength;
-            window.scroll(0, scrollDestination);
+        switch (e.keyCode) {
+            case keyCodes.A:
+                scrollDestination = window.pageYOffset - window.innerHeight;
+                window.scroll(0, scrollDestination);
+                break;
+            case keyCodes.E:
+                scrollDestination = window.pageYOffset + window.innerHeight;
+                window.scroll(0, scrollDestination);
+                break;
+            case keyCodes.N:
+                scrollDestination = window.pageYOffset + minScrollLength;
+                window.scroll(0, scrollDestination);
+                break;
+            case keyCodes.P:
+                scrollDestination = window.pageYOffset - minScrollLength;
+                window.scroll(0, scrollDestination);
+                break;
         }
     }
 });
