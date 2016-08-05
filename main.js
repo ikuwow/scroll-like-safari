@@ -11,27 +11,26 @@ const keyCodes = {
 
 const minScrollLength = 36;
 
-document.addEventListener('keydown', function(e) {
+let scrollSafari = function(offset) {
+    let scrollDestination = window.pageYOffset + offset;
+    window.scroll(0, scrollDestination);
+};
 
-    let scrollDestination;
+document.addEventListener('keydown', function(e) {
 
     if (e.ctrlKey) {
         switch (e.keyCode) {
-            case keyCodes.A:
-                scrollDestination = window.pageYOffset - window.innerHeight;
-                window.scroll(0, scrollDestination);
-                break;
             case keyCodes.E:
-                scrollDestination = window.pageYOffset + window.innerHeight;
-                window.scroll(0, scrollDestination);
+                scrollSafari(window.innerHeight);
+                break;
+            case keyCodes.A:
+                scrollSafari(-window.innerHeight);
                 break;
             case keyCodes.N:
-                scrollDestination = window.pageYOffset + minScrollLength;
-                window.scroll(0, scrollDestination);
+                scrollSafari(minScrollLength);
                 break;
             case keyCodes.P:
-                scrollDestination = window.pageYOffset - minScrollLength;
-                window.scroll(0, scrollDestination);
+                scrollSafari(-minScrollLength);
                 break;
         }
     }
