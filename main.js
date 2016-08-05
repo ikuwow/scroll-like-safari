@@ -11,9 +11,28 @@ const keyCodes = {
 
 const minScrollLength = 36;
 
-let scrollSafari = function(offset) {
-    let scrollDestination = window.pageYOffset + offset;
-    window.scroll(0, scrollDestination);
+let scrollInterval;
+
+let smoothScrollSafari = function(offset, travelTime) {
+
+    clearInterval(scrollInterval);
+
+    let current = window.pageYOffset,
+        timeForNext = 10,
+        next,
+        percentage;
+
+    var timeLapsed = 0;
+    scrollInterval = setInterval(function(){
+
+        timeLapsed += timeForNext;
+        percentage = timeLapsed / travelTime;
+        next = offset * percentage;
+        window.scroll(0, current + next);
+        if (percentage >= 1) {
+            clearInterval(scrollInterval);
+        }
+    }, timeForNext);
 };
 
 document.addEventListener('keydown', function(e) {
@@ -21,16 +40,16 @@ document.addEventListener('keydown', function(e) {
     if (e.ctrlKey) {
         switch (e.keyCode) {
             case keyCodes.E:
-                scrollSafari(window.innerHeight);
+                smoothScrollSafari(window.innerHeight, 100);
                 break;
             case keyCodes.A:
-                scrollSafari(-window.innerHeight);
+                smoothScrollSafari(-window.innerHeight, 100);
                 break;
             case keyCodes.N:
-                scrollSafari(minScrollLength);
+                smoothScrollSafari(minScrollLength, 30);
                 break;
             case keyCodes.P:
-                scrollSafari(-minScrollLength);
+                smoothScrollSafari(-minScrollLength, 30);
                 break;
         }
     }
