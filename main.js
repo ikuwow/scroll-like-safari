@@ -2,6 +2,11 @@
 
 "use strict";
 
+if (navigator.platform !== 'MacIntel') {
+    console.error('Error: Your platform (%s) is not compatible with "Scroll Like Safari" extension. It only supports Chrome on macOS.', navigator.platform);
+    return;
+}
+
 const keyCodes = {
     A: 65,
     E: 69,
