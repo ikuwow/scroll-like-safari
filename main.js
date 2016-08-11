@@ -15,6 +15,7 @@ const keyCodes = {
 };
 
 const minScrollLength = 36;
+let doingTextInput = false;
 
 let scrollInterval;
 
@@ -42,6 +43,9 @@ let smoothScrollSafari = function(offset, travelTime) {
 
 document.addEventListener('keydown', function(e) {
 
+    if (doingTextInput) {
+        return;
+    }
     if (e.ctrlKey) {
         switch (e.keyCode) {
             case keyCodes.E:
@@ -59,5 +63,27 @@ document.addEventListener('keydown', function(e) {
         }
     }
 });
+
+function disableTextInputOnFocus(element) {
+    element.addEventListener('focus', function() {
+        doingTextInput = true;
+        console.log(doingTextInput);
+    });
+    element.addEventListener('blur', function() {
+        doingTextInput = false;
+        console.log(doingTextInput);
+    });
+}
+
+var inputs = document.getElementsByTagName('input');
+for (var i = 0; i < inputs.length; i++) {
+    disableTextInputOnFocus(inputs[i]);
+}
+
+var textareas = document.getElementsByTagName('textarea');
+for (var i = 0; i< textareas.length; i++) {
+    disableTextInputOnFocus(textareas[i]);
+}
+
 
 })();
