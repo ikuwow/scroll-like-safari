@@ -64,26 +64,17 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-function disableTextInputOnFocus(element) {
-    element.addEventListener('focus', function() {
+const noScrollTag = ['textarea', 'input'];
+document.addEventListener('focus', function(e) {
+    if (noScrollTag.indexOf(e.target.tagName.toLowerCase()) >= 0) {
         doingTextInput = true;
-        console.log(doingTextInput);
-    });
-    element.addEventListener('blur', function() {
+    }
+}, true);
+document.addEventListener('blur', function(e) {
+    if (noScrollTag.indexOf(e.target.tagName.toLowerCase()) >= 0) {
         doingTextInput = false;
-        console.log(doingTextInput);
-    });
-}
-
-var inputs = document.getElementsByTagName('input');
-for (var i = 0; i < inputs.length; i++) {
-    disableTextInputOnFocus(inputs[i]);
-}
-
-var textareas = document.getElementsByTagName('textarea');
-for (var i = 0; i< textareas.length; i++) {
-    disableTextInputOnFocus(textareas[i]);
-}
+    }
+}, true);
 
 
 })();
