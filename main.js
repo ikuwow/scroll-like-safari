@@ -64,17 +64,20 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-const noScrollTag = ['textarea', 'input'];
 document.addEventListener('focus', function(e) {
-    if (noScrollTag.indexOf(e.target.tagName.toLowerCase()) >= 0) {
+    if (targetIsInputtingElement(e)) {
         doingTextInput = true;
     }
 }, true);
 document.addEventListener('blur', function(e) {
-    if (noScrollTag.indexOf(e.target.tagName.toLowerCase()) >= 0) {
+    if (targetIsInputtingElement(e)) {
         doingTextInput = false;
     }
 }, true);
 
+function targetIsInputtingElement(event) {
+    const noScrollTag = ['textarea', 'input'];
+    return noScrollTag.indexOf(event.target.tagName.toLowerCase()) >= 0 || event.target.getAttribute('contenteditable');
+}
 
 })();
